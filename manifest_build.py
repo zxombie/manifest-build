@@ -43,6 +43,7 @@ except IndexError:
     print("Usage: {0} <base path>".format(sys.argv[0]))
     sys.exit(1)
 
+path = os.path.join(path, '') # Ensure the path includes the trining slash
 path_len = len(path)
 for root, dirs, files in os.walk(path):
     sb = os.stat(root)
