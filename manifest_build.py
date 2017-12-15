@@ -43,12 +43,13 @@ except IndexError:
     print("Usage: {0} <base path>".format(sys.argv[0]))
     sys.exit(1)
 
+path_len = len(path)
 for root, dirs, files in os.walk(path):
     sb = os.stat(root)
-    print(root, "type=dir uname=root gname=wheel mode=0{0:o}".format(sb.st_mode & 0o777))
+    print(os.path.join('.', root[path_len:]), "type=dir uname=root gname=wheel mode=0{0:o}".format(sb.st_mode & 0o777))
     for f in files:
-        name = "%s/%s" % (root, f)
+        name = os.path.join(root, f)
         loc = os.path.abspath(name)
         sb = os.stat(name)
-        print(name, "type=file uname=root gname=wheel mode=0{0:o} contents={1}".format(sb.st_mode & 0o777, loc))
+        print(os.path.join('.', name[path_len:]), "type=file uname=root gname=wheel mode=0{0:o} contents={1}".format(sb.st_mode & 0o777, loc))
         assert stat.S_ISREG(sb.st_mode)
